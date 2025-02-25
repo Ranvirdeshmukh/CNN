@@ -1,85 +1,80 @@
+# CNN: A Neural Network for Cook Islands Māori Parts of Speech
 
-Overview
-This project implements a neural network for predicting parts of speech (POS) in Cook Islands Māori. The code is based on a tutorial from Machine Learning Mastery, and it has been adapted for our linguistic dataset. The goal is to classify tokens into one of three parts of speech: noun, verb, or preposition.
+**GooferNet** is an independent neural network project designed to predict parts of speech in Cook Islands Māori text data. It leverages a fully connected architecture (Multilayer Perceptron) along with one-hot encoding to classify tokens into three categories: noun, verb, or preposition.
 
-Project Structure
-Data Preparation:
+## Overview
 
-The CSV file cim-3pos.csv is loaded using pandas and then preprocessed.
-Features (predictive words) are one-hot encoded, and the target variable (POS tags) is label-encoded and transformed into a categorical format.
-The dataset is split into training (90%) and test (10%) sets.
-Neural Network Model:
+- **Objective:** Predict whether a given Cook Islands Māori token is a **noun**, **verb**, or **preposition**.
+- **Methodology:** 
+  - Convert tokens into high-dimensional one-hot encoded vectors.
+  - Train a sequential neural network using Keras/TensorFlow.
+  - Evaluate the model using accuracy, F1-scores, a classification report, and a confusion matrix.
 
-The model is built using Keras with TensorFlow as the backend.
-Original configuration:
-A hidden layer with 48 neurons.
-A second hidden layer with 24 neurons (changed from an earlier version which had 6 neurons).
-An output layer with 3 neurons using the softmax activation function.
-The model is compiled with the categorical_crossentropy loss function and the adam optimizer.
-The model is then trained for a specified number of epochs (default is 200 in the modified code).
-Evaluation:
+## Project Structure
+.
+├── GooferNet.py            # Main script containing data loading, model creation, training, and evaluation
+├── cim-3pos.csv            # Example CSV dataset with Cook Islands Māori tokens and their POS tags
+├── readme.md               # You're reading it now!
 
-After training, the model makes predictions on the test set.
-The code prints:
-The raw probabilities for the first five test items.
-The first 15 test inputs, along with predicted and true labels.
-Overall test accuracy, a classification report, and a confusion matrix.
-These outputs help in evaluating model performance, including the F1-scores.
-Homework Tasks
-The project includes three distinct tasks that require multiple runs and modifications:
 
-Task (a): Baseline Experiment
-Objective:
-Run the program three times.
-Record the training and test accuracy for each run.
-Analyze how the F1-scores behave by reviewing the predictions for the first fifteen items.
-Deliverable:
-A report summarizing the average training accuracy, average test accuracy, and insights on the F1-scores.
-Task (b): Modified Hidden Layers
-Objective:
-Change the model to use a hidden layer configuration of 48 neurons in the first hidden layer and 24 neurons in the second hidden layer.
-Adjust the output layer to 3 neurons (ensuring it uses softmax).
-Run the modified program three times.
-Deliverable:
-A report with the average training/test accuracy and a detailed discussion on the behavior of the F1-scores, supported by predictions for the first ten items.
-Task (c): Increased Epochs
-Objective:
-With the same settings as in Task (b), change the number of training epochs to 200.
-Run the program three times.
-Deliverable:
-A report summarizing the average training and test accuracy along with a discussion of F1-scores, using the predictions for the first ten items as reference.
-Running the Code
-Dependencies:
-Ensure you have the following packages installed:
 
-numpy
-pandas
-scikit-learn
-keras (or tensorflow.keras)
-gdown
-Instructions:
+> **Note:** The project uses the `cim-3pos.csv` dataset. If you are using a different dataset, adjust the filename and column names accordingly.
 
-Comment out any cell-specific run instructions (if using a Jupyter Notebook).
-Use the "Runtime" > "Run all" command (or equivalent in your environment) to execute the entire code.
-Record the results from the console output for each run, especially focusing on the training/test accuracy and F1-scores.
-Take screenshots of the results as evidence and include them in your final report document.
-Modifications:
+## Data Preparation
 
-For Task (b), ensure that the hidden layers are set to 48 and 24 neurons respectively, and the output layer to 3 neurons.
-For Task (c), update the number of epochs in the model.fit() function to 200.
-Code Explanation
-Data Loading and Preprocessing:
-The dataset is loaded from cim-3pos.csv. Features are one-hot encoded using OneHotEncoder, while labels are encoded with LabelEncoder and converted to categorical format for multi-class classification.
+1. **Dataset**  
+   - The CSV file (`cim-3pos.csv`) contains tokens and their corresponding parts of speech.
+   - Modify the file or code if your dataset uses different column names.
 
-Model Architecture:
-The neural network uses:
+2. **One-Hot Encoding**  
+   - Uses `OneHotEncoder` from `sklearn` to transform tokens into binary feature vectors.
+   - Ensures each unique token is represented by a unique binary vector.
 
-An input layer corresponding to 1497 features.
-Two hidden layers with ReLU activation to capture non-linear relationships.
-A final softmax output layer that outputs a probability distribution over the three POS classes.
-Model Evaluation:
-The code calculates and prints:
+3. **Train/Test Split**  
+   - The dataset is divided into 90% training data and 10% test data using `train_test_split` from `sklearn`.
 
-Probabilities for the first few test cases.
-A detailed comparison of predictions versus actual labels.
-Overall performance metrics including a confusion matrix and classification report.
+## Model Architecture
+
+**GooferNet** employs a simple feedforward neural network with:
+
+- **Input Layer:** Dimension equals the number of unique tokens after one-hot encoding.
+- **Hidden Layer 1:** 48 neurons with ReLU activation.
+- **Hidden Layer 2:** 24 neurons with ReLU activation.
+- **Output Layer:** 3 neurons (for the three POS classes) with softmax activation.
+
+The network is compiled with the `adam` optimizer and uses `categorical_crossentropy` as the loss function.
+
+### Model Summary
+
+Layer (type)               Output Shape              Param #  
+=================================================================
+dense (Dense)              (None, 48)                <calculated automatically>
+dense_1 (Dense)            (None, 24)                <calculated automatically>
+dense_2 (Dense)            (None, 3)                 <calculated automatically>
+=================================================================
+
+## How to Use
+
+### 1. Install Dependencies
+
+Ensure you have the necessary libraries installed. You can install them using:
+
+
+python CNN.py
+
+
+
+## Sample Output:
+===== Accuracy of test set =====
+87.0%
+
+===== Classification Report =====
+              precision    recall  f1-score   support
+0 (noun)         ...
+1 (verb)         ...
+2 (prep)         ...
+
+===== Confusion Matrix =====
+[[TP  FP ...]
+ [FN  TP ...]
+ [...       ]]
